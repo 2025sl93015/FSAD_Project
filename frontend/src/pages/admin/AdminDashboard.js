@@ -65,6 +65,7 @@ const AdminDashboard = () => {
           <div className="loading-box"><i className="fas fa-spinner fa-spin"></i> Loading...</div>
         ) : (
           <div className="table-container">
+            <div className="table-scroll">
             <table className="bills-table">
               <thead>
                 <tr>
@@ -110,6 +111,7 @@ const AdminDashboard = () => {
                 ))}
               </tbody>
             </table>
+            </div>
           </div>
         )}
       </div>

@@ -5,7 +5,7 @@ export const STATUS_LABELS = {
   REJECTED_BY_MANAGER: { label: 'Manager Rejected', color: '#ea4335', bg: '#fce8e6' },
   APPROVED_BY_FINANCE: { label: 'Finance Approved', color: '#1e8e3e', bg: '#ceead6' },
   REJECTED_BY_FINANCE: { label: 'Finance Rejected', color: '#c5221f', bg: '#fcd0cd' },
-  CLOSED: { label: 'Closed', color: '#137333', bg: '#c2e7cf' },
+  CLOSED: { label: 'Completed', color: '#137333', bg: '#c2e7cf' },
 };
 
 export const BILL_TYPES = [

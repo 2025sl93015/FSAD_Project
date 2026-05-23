@@ -14,6 +14,7 @@ public interface BillRepository extends JpaRepository<Bill, Long> {
     List<Bill> findByAssignedManagerIdOrderByCreatedAtDesc(Long managerId);
     List<Bill> findByFinanceManagerIdOrderByCreatedAtDesc(Long financeManagerId);
     List<Bill> findByStatusOrderByCreatedAtDesc(BillStatus status);
+    List<Bill> findByStatusInOrderByCreatedAtDesc(List<BillStatus> statuses);
     List<Bill> findByCreatedByIdAndStatusOrderByCreatedAtDesc(Long userId, BillStatus status);
     Optional<Bill> findByBillNumber(String billNumber);
     long countByCreatedByIdAndStatus(Long userId, BillStatus status);

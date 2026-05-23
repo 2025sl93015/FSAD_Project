@@ -144,6 +144,12 @@ public class BillServiceImpl implements BillService {
     }
 
     @Override
+    public List<BillDTO> getBillsForFinanceClose(String username) {
+        return billRepository.findByStatusOrderByCreatedAtDesc(BillStatus.APPROVED_BY_FINANCE)
+                .stream().map(this::toDTO).collect(Collectors.toList());
+    }
+
+    @Override
     public List<BillDTO> getAllBills() {
         return billRepository.findAll().stream().map(this::toDTO).collect(Collectors.toList());
     }

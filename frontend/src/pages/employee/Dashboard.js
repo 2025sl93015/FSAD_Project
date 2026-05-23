@@ -4,7 +4,7 @@ import { billService } from '../../services/services';
 import { useAuth } from '../../context/AuthContext';
 import PageLayout from '../../components/layout/PageLayout';
 import StatusBadge from '../../components/common/StatusBadge';
-import { formatCurrency, formatDate } from '../../utils/constants';
+import { formatCurrency, formatDate, STATUS_LABELS } from '../../utils/constants';
 import { toast } from 'react-toastify';
 import './Dashboard.css';
 
@@ -20,7 +20,7 @@ const Dashboard = () => {
 
   const fetchBills = async () => {
     try {
-      const fetchFn = user?.role === 'ADMIN' ? billService.getAllBills : billService.getOpenRequests;
+      const fetchFn = user?.role === 'ADMIN' ? billService.getAllBills : billService.getMyBills;
       const res = await fetchFn();
       setBills(res.data.data || []);
     } catch (err) {
@@ -38,7 +38,7 @@ const Dashboard = () => {
     return acc;
   }, {});
 
-  const title = user?.role === 'ADMIN' ? 'All Bills' : 'My Open Requests';
+  const title = user?.role === 'ADMIN' ? 'All Bills' : 'My Bills';
 
   return (
     <PageLayout title={title}>
@@ -70,7 +70,7 @@ const Dashboard = () => {
             <div className="stat-icon"><i className="fas fa-lock"></i></div>
             <div className="stat-info">
               <div className="stat-value">{statusCounts['CLOSED'] || 0}</div>
-              <div className="stat-label">Closed</div>
+              <div className="stat-label">Completed</div>
             </div>
           </div>
         </div>
@@ -78,13 +78,13 @@ const Dashboard = () => {
         {/* Action Bar */}
         <div className="action-bar">
           <div className="filter-tabs">
-            {['ALL', 'DRAFT', 'SUBMITTED', 'APPROVED_BY_MANAGER', 'REJECTED_BY_MANAGER', 'CLOSED'].map(s => (
+            {['ALL', 'DRAFT', 'SUBMITTED', 'APPROVED_BY_MANAGER', 'REJECTED_BY_MANAGER', 'APPROVED_BY_FINANCE', 'REJECTED_BY_FINANCE', 'CLOSED'].map(s => (
               <button
                 key={s}
                 className={`filter-tab ${filter === s ? 'active' : ''}`}
                 onClick={() => setFilter(s)}
               >
-                {s === 'ALL' ? 'All' : s.replace(/_/g, ' ')}
+                {s === 'ALL' ? 'All' : (STATUS_LABELS[s]?.label || s.replace(/_/g, ' '))}
               </button>
             ))}
           </div>
@@ -108,6 +108,7 @@ const Dashboard = () => {
           </div>
         ) : (
           <div className="table-container">
+            <div className="table-scroll">
             <table className="bills-table">
               <thead>
                 <tr>
@@ -138,6 +139,7 @@ const Dashboard = () => {
                 ))}
               </tbody>
             </table>
+            </div>
           </div>
         )}
       </div>

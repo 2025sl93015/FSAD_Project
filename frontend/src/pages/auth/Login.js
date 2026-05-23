@@ -58,7 +58,7 @@ const Login = () => {
           <div className="form-group">
             <label>Username</label>
             <div className="input-icon">
-              <i className="fas fa-user"></i>
+              
               <input
                 type="text"
                 placeholder="Enter username"
@@ -72,7 +72,7 @@ const Login = () => {
           <div className="form-group">
             <label>Password</label>
             <div className="input-icon">
-              <i className="fas fa-lock"></i>
+              
               <input
                 type="password"
                 placeholder="Enter password"

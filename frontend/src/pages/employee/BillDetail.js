@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { billService } from '../../services/services';
 import PageLayout from '../../components/layout/PageLayout';
 import StatusBadge from '../../components/common/StatusBadge';
-import { formatCurrency, formatDate } from '../../utils/constants';
+import { formatCurrency, formatDate, STATUS_LABELS } from '../../utils/constants';
 import { toast } from 'react-toastify';
 import './BillDetail.css';
 
@@ -103,7 +103,7 @@ const BillDetail = () => {
                   <div className="timeline-content">
                     <div className="timeline-header">
                       <strong>{c.commentedByName}</strong>
-                      <span className="timeline-action">{c.action?.replace(/_/g, ' ')}</span>
+                      <span className="timeline-action">{STATUS_LABELS[c.action]?.label || c.action?.replace(/_/g, ' ')}</span>
                       <span className="timeline-date">{formatDate(c.createdAt)}</span>
                     </div>
                     <p>{c.comment}</p>

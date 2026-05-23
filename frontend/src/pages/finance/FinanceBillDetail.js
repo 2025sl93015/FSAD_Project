@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { billService } from '../../services/services';
 import PageLayout from '../../components/layout/PageLayout';
 import StatusBadge from '../../components/common/StatusBadge';
-import { formatCurrency, formatDate } from '../../utils/constants';
+import { formatCurrency, formatDate, STATUS_LABELS } from '../../utils/constants';
 import { toast } from 'react-toastify';
 import '../employee/BillDetail.css';
 import '../manager/ManagerBillDetail.css';
@@ -34,7 +34,7 @@ const FinanceBillDetail = () => {
         toast.success('Bill rejected. Employee notified.');
       } else {
         res = await billService.closeBill(id, { comment });
-        toast.success('Bill closed! Amount credited to employee.');
+        toast.success('Bill completed! Amount credited to employee.');
       }
       setBill(res.data.data);
       setComment('');
@@ -46,7 +46,11 @@ const FinanceBillDetail = () => {
     }
   };
 
-  if (!bill) return <PageLayout title="Process Bill"><div className="loading-box"><i className="fas fa-spinner fa-spin"></i> Loading...</div></PageLayout>;
+  if (!bill) return (
+    <PageLayout title="Process Bill">
+      <div className="loading-box"><i className="fas fa-spinner fa-spin"></i> Loading...</div>
+    </PageLayout>
+  );
 
   const canApprove = bill.status === 'APPROVED_BY_MANAGER';
   const canClose = bill.status === 'APPROVED_BY_FINANCE';
@@ -61,7 +65,9 @@ const FinanceBillDetail = () => {
           </div>
           <div className="header-right">
             <StatusBadge status={bill.status} />
-            <button className="btn-back" onClick={() => navigate(-1)}><i className="fas fa-arrow-left"></i> Back</button>
+            <button className="btn-back" onClick={() => navigate(-1)}>
+              <i className="fas fa-arrow-left"></i> Back
+            </button>
           </div>
         </div>
 
@@ -88,18 +94,23 @@ const FinanceBillDetail = () => {
         </div>
 
         {bill.comments?.length > 0 && (
-          <div className="timeline-card" style={{marginBottom: '20px', background: 'white', borderRadius: '12px', padding: '20px 24px', boxShadow: '0 2px 8px rgba(0,0,0,0.06)'}}>
-            <h3 style={{fontSize:'14px', fontWeight:'700', color:'#1a237e', marginBottom:'16px', display:'flex', alignItems:'center', gap:'8px'}}><i className="fas fa-history"></i> Activity</h3>
-            {bill.comments.map(c => (
-              <div key={c.id} style={{marginBottom:'12px', padding:'12px', background:'#f8f9fa', borderRadius:'8px'}}>
-                <div style={{display:'flex', gap:'8px', marginBottom:'4px', flexWrap:'wrap'}}>
-                  <strong style={{fontSize:'14px'}}>{c.commentedByName}</strong>
-                  <span style={{fontSize:'11px', background:'#e8f0fe', color:'#1a73e8', padding:'2px 8px', borderRadius:'10px', fontWeight:'600'}}>{c.action?.replace(/_/g,' ')}</span>
-                  <span style={{fontSize:'12px', color:'#9e9e9e', marginLeft:'auto'}}>{formatDate(c.createdAt)}</span>
+          <div className="timeline-card timeline-card-spaced">
+            <h3><i className="fas fa-history"></i> Activity</h3>
+            <div className="timeline">
+              {bill.comments.map(c => (
+                <div key={c.id} className="timeline-item">
+                  <div className="timeline-dot"></div>
+                  <div className="timeline-content">
+                    <div className="timeline-header">
+                      <strong>{c.commentedByName}</strong>
+                      <span className="timeline-action">{STATUS_LABELS[c.action]?.label || c.action?.replace(/_/g, ' ')}</span>
+                      <span className="timeline-date">{formatDate(c.createdAt)}</span>
+                    </div>
+                    <p>{c.comment}</p>
+                  </div>
                 </div>
-                <p style={{fontSize:'14px', color:'#444'}}>{c.comment}</p>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         )}
 
@@ -119,17 +130,25 @@ const FinanceBillDetail = () => {
               {canApprove && (
                 <>
                   <button className="btn-reject" onClick={() => handleAction('reject')} disabled={actionLoading !== null}>
-                    {actionLoading === 'reject' ? <><i className="fas fa-spinner fa-spin"></i> Rejecting...</> : <><i className="fas fa-times-circle"></i> Reject</>}
+                    {actionLoading === 'reject'
+                      ? <><i className="fas fa-spinner fa-spin"></i> Rejecting...</>
+                      : <><i className="fas fa-times-circle"></i> Reject</>
+                    }
                   </button>
                   <button className="btn-approve" onClick={() => handleAction('approve')} disabled={actionLoading !== null}>
-                    {actionLoading === 'approve' ? <><i className="fas fa-spinner fa-spin"></i> Approving...</> : <><i className="fas fa-check-circle"></i> Approve</>}
+                    {actionLoading === 'approve'
+                      ? <><i className="fas fa-spinner fa-spin"></i> Approving...</>
+                      : <><i className="fas fa-check-circle"></i> Approve</>
+                    }
                   </button>
                 </>
               )}
               {canClose && (
-                <button className="btn-approve" onClick={() => handleAction('close')} disabled={actionLoading !== null}
-                  style={{background: '#137333'}}>
-                  {actionLoading === 'close' ? <><i className="fas fa-spinner fa-spin"></i> Closing...</> : <><i className="fas fa-lock"></i> Credit &amp; Close Bill</>}
+                <button className="btn-close-bill" onClick={() => handleAction('close')} disabled={actionLoading !== null}>
+                  {actionLoading === 'close'
+                    ? <><i className="fas fa-spinner fa-spin"></i> Closing...</>
+                    : <><i className="fas fa-lock"></i> Credit &amp; Close Bill</>
+                  }
                 </button>
               )}
             </div>

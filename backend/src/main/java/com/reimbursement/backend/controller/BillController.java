@@ -92,6 +92,12 @@ public class BillController {
         return ResponseEntity.ok(ApiResponse.success(bills, "Bills for finance retrieved"));
     }
 
+    @GetMapping("/finance/approved")
+    public ResponseEntity<?> getBillsForFinanceClose(@AuthenticationPrincipal UserDetails userDetails) {
+        List<BillDTO> bills = billService.getBillsForFinanceClose(userDetails.getUsername());
+        return ResponseEntity.ok(ApiResponse.success(bills, "Bills approved by finance retrieved"));
+    }
+
     @PostMapping("/{billId}/approve/finance")
     public ResponseEntity<?> approveBillByFinance(@PathVariable Long billId,
                                                    @Valid @RequestBody BillActionRequest request,

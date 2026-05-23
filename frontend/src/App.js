@@ -11,6 +11,7 @@ import BillDetail from './pages/employee/BillDetail';
 import ManagerDashboard from './pages/manager/ManagerDashboard';
 import ManagerBillDetail from './pages/manager/ManagerBillDetail';
 import FinanceDashboard from './pages/finance/FinanceDashboard';
+import FinanceCloseQueue from './pages/finance/FinanceCloseQueue';
 import FinanceBillDetail from './pages/finance/FinanceBillDetail';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import CreateUser from './pages/admin/CreateUser';
@@ -57,6 +58,11 @@ function App() {
           <Route path="/finance/dashboard" element={
             <PrivateRoute roles={['FINANCE_MANAGER', 'ADMIN']}>
               <FinanceDashboard />
+            </PrivateRoute>
+          } />
+          <Route path="/finance/close-queue" element={
+            <PrivateRoute roles={['FINANCE_MANAGER', 'ADMIN']}>
+              <FinanceCloseQueue />
             </PrivateRoute>
           } />
           <Route path="/finance/bills/:id" element={

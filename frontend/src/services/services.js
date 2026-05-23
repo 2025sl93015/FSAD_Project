@@ -20,6 +20,7 @@ export const billService = {
 
   // Finance
   getFinancePending: () => api.get('/bills/finance/pending'),
+  getFinanceApproved: () => api.get('/bills/finance/approved'),
   approveBillByFinance: (id, data) => api.post(`/bills/${id}/approve/finance`, data),
   rejectBillByFinance: (id, data) => api.post(`/bills/${id}/reject/finance`, data),
   closeBill: (id, data) => api.post(`/bills/${id}/close`, data),

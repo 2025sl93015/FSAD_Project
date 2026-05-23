@@ -15,6 +15,7 @@ public interface BillService {
     List<BillDTO> getOpenRequestsForUser(String username);
     List<BillDTO> getBillsForManager(String username);
     List<BillDTO> getBillsForFinanceManager(String username);
+    List<BillDTO> getBillsForFinanceClose(String username);
     List<BillDTO> getAllBills();
     BillDTO approveBillByManager(Long billId, BillActionRequest request, String username);
     BillDTO rejectBillByManager(Long billId, BillActionRequest request, String username);

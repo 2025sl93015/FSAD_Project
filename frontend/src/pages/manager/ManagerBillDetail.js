@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { billService } from '../../services/services';
 import PageLayout from '../../components/layout/PageLayout';
 import StatusBadge from '../../components/common/StatusBadge';
-import { formatCurrency, formatDate } from '../../utils/constants';
+import { formatCurrency, formatDate, STATUS_LABELS } from '../../utils/constants';
 import { toast } from 'react-toastify';
 import './ManagerBillDetail.css';
 
@@ -90,7 +90,7 @@ const ManagerBillDetail = () => {
 
         {/* Previous Comments */}
         {bill.comments?.length > 0 && (
-          <div className="timeline-card" style={{marginBottom: '20px'}}>
+          <div className="timeline-card timeline-card-spaced">
             <h3><i className="fas fa-history"></i> Activity</h3>
             <div className="timeline">
               {bill.comments.map(c => (
@@ -99,7 +99,7 @@ const ManagerBillDetail = () => {
                   <div className="timeline-content">
                     <div className="timeline-header">
                       <strong>{c.commentedByName}</strong>
-                      <span className="timeline-action">{c.action?.replace(/_/g, ' ')}</span>
+                      <span className="timeline-action">{STATUS_LABELS[c.action]?.label || c.action?.replace(/_/g, ' ')}</span>
                       <span className="timeline-date">{formatDate(c.createdAt)}</span>
                     </div>
                     <p>{c.comment}</p>

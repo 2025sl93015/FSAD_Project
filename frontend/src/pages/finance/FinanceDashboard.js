@@ -19,7 +19,7 @@ const FinanceDashboard = () => {
   }, []);
 
   return (
-    <PageLayout title="Finance Queue">
+    <PageLayout title="Finance Review Queue">
       <div>
         {loading ? (
           <div className="loading-box"><i className="fas fa-spinner fa-spin"></i> Loading...</div>
@@ -30,6 +30,7 @@ const FinanceDashboard = () => {
           </div>
         ) : (
           <div className="table-container">
+            <div className="table-scroll">
             <table className="bills-table">
               <thead>
                 <tr>
@@ -56,12 +57,13 @@ const FinanceDashboard = () => {
                     <td><StatusBadge status={bill.status} /></td>
                     <td>{formatDate(bill.updatedAt)}</td>
                     <td>
-                      <Link to={`/finance/bills/${bill.id}`} className="btn-view">Process</Link>
+                      <Link to={`/finance/bills/${bill.id}`} className="btn-view">Review</Link>
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
+            </div>
           </div>
         )}
       </div>

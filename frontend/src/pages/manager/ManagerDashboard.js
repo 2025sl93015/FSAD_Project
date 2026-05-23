@@ -30,6 +30,7 @@ const ManagerDashboard = () => {
           </div>
         ) : (
           <div className="table-container">
+            <div className="table-scroll">
             <table className="bills-table">
               <thead>
                 <tr>
@@ -62,6 +63,7 @@ const ManagerDashboard = () => {
                 ))}
               </tbody>
             </table>
+            </div>
           </div>
         )}
       </div>

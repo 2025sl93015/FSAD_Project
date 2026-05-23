@@ -39,7 +39,7 @@ const CreateUser = () => {
 
   return (
     <PageLayout title="Create New User">
-      <div style={{maxWidth: '600px'}}>
+      <div className="form-page-wrapper">
         <div className="bill-form-card">
           <form onSubmit={handleSubmit}>
             <div className="form-section">
@@ -81,7 +81,7 @@ const CreateUser = () => {
               </div>
 
               {form.role === 'EMPLOYEE' && (
-                <div className="form-group" style={{marginTop: '4px'}}>
+                <div className="form-group">
                   <label>Assign Manager</label>
                   <select name="managerId" value={form.managerId} onChange={handleChange}>
                     <option value="">-- Select Manager --</option>

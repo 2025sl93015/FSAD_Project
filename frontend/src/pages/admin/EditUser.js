@@ -55,7 +55,7 @@ const EditUser = () => {
 
   return (
     <PageLayout title="Edit User">
-      <div style={{maxWidth: '600px'}}>
+      <div className="form-page-wrapper">
         <div className="bill-form-card">
           <form onSubmit={handleSubmit}>
             <div className="form-section">
@@ -68,7 +68,7 @@ const EditUser = () => {
                 </div>
                 <div className="form-group">
                   <label>Username</label>
-                  <input name="username" value={form.username} disabled style={{background:'#f8f9fa', color:'#9e9e9e'}} />
+                  <input name="username" value={form.username} disabled className="input-disabled" />
                 </div>
               </div>
 
@@ -78,7 +78,7 @@ const EditUser = () => {
                   <input name="email" type="email" value={form.email} onChange={handleChange} required />
                 </div>
                 <div className="form-group">
-                  <label>New Password <small style={{color:'#9e9e9e'}}>(leave blank to keep)</small></label>
+                  <label>New Password <small className="label-hint">(leave blank to keep)</small></label>
                   <input name="password" type="password" placeholder="Enter new password" value={form.password} onChange={handleChange} />
                 </div>
               </div>
@@ -97,7 +97,7 @@ const EditUser = () => {
               </div>
 
               {form.role === 'EMPLOYEE' && (
-                <div className="form-group" style={{marginTop: '4px'}}>
+                <div className="form-group">
                   <label>Assign Manager</label>
                   <select name="managerId" value={form.managerId} onChange={handleChange}>
                     <option value="">-- Select Manager --</option>
